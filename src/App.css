@@ -37,20 +37,15 @@ input {
 .app-shell {
   width: min(1120px, calc(100% - 1.5rem));
   margin: 0 auto;
-  padding: 1rem 0 2rem;
+  padding: 0.75rem 0 1.5rem;
 }
 
 .hero {
   display: grid;
   gap: 1rem;
-  padding: 0.75rem 0 1.25rem;
+  padding: 0 0 1rem;
 }
 
-.hero-copy-block {
-  padding: 0.5rem 0;
-}
-
-.eyebrow,
 .panel-label {
   margin: 0 0 0.4rem;
   text-transform: uppercase;
@@ -60,19 +55,12 @@ input {
   color: #3d6f54;
 }
 
-.hero h1,
 .selection-card h2,
 .route-summary h2 {
   margin: 0;
   line-height: 1.05;
 }
 
-.hero h1 {
-  font-size: clamp(2.6rem, 8vw, 4.8rem);
-  max-width: 10ch;
-}
-
-.hero-copy,
 .selection-card p,
 .admin-panel p,
 .map-header p {
@@ -83,9 +71,8 @@ input {
 .admin-panel,
 .selection-card,
 .route-summary,
-.map-panel,
 .stop-list-panel {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(73, 103, 82, 0.12);
   border-radius: 24px;
   box-shadow: 0 18px 50px rgba(34, 63, 49, 0.08);
@@ -95,17 +82,12 @@ input {
 .admin-panel,
 .selection-card,
 .route-summary,
-.map-panel,
 .stop-list-panel {
   padding: 1rem;
 }
 
 .compact {
   padding: 0.85rem 1rem;
-}
-
-.admin-panel-body {
-  margin-top: 0.85rem;
 }
 
 .admin-copy {
@@ -226,7 +208,7 @@ input {
 
 .assignment-main {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.25rem;
 }
 
 .assignment-main span,
@@ -240,9 +222,29 @@ input {
 }
 
 .assignment-button small {
-  min-width: 72px;
-  text-align: right;
+  min-width: 84px;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  text-align: center;
   color: #5f7668;
+  background: #e8f0e8;
+}
+
+.assignment-cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.assignment-cities em {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(22, 63, 42, 0.08);
+  color: #2e5440;
+  font-style: normal;
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
 .empty-state {
@@ -250,43 +252,117 @@ input {
   font-size: 0.95rem;
 }
 
-.ghost-button {
-  width: 100%;
-  padding: 0.8rem 0.95rem;
-  border: 0;
-  border-radius: 999px;
-  color: #163f2a;
-  background: #edf3eb;
-  cursor: pointer;
-}
-
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.route-summary-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.progress-banner {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(22, 63, 42, 0.08) 0%, rgba(255, 255, 255, 0.96) 100%);
+  border: 1px solid rgba(73, 103, 82, 0.14);
+}
+
+.progress-copy span,
+.progress-copy strong,
+.progress-banner small {
+  display: block;
+}
+
+.progress-copy span {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #587160;
+}
+
+.progress-copy strong {
+  margin-top: 0.1rem;
+  font-size: 1rem;
+}
+
+.progress-meter {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(73, 103, 82, 0.12);
+}
+
+.progress-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #163f2a 0%, #ed9e59 100%);
+}
+
+.progress-banner small {
+  color: #5d7667;
+  font-weight: 700;
 }
 
 .summary-grid article {
-  padding: 0.9rem;
-  border-radius: 18px;
+  min-height: 76px;
+  padding: 0.8rem 0.9rem;
+  border-radius: 16px;
   background: #eef4eb;
 }
 
 .summary-grid span {
   display: block;
   color: #5d7667;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .summary-grid strong {
-  font-size: 1.7rem;
+  margin-top: 0.2rem;
+  font-size: 1.35rem;
+}
+
+.next-stop-inline {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(237, 158, 89, 0.18) 0%, rgba(255, 255, 255, 0.96) 100%);
+  border: 1px solid rgba(237, 158, 89, 0.24);
+  color: #24313c;
+}
+
+.next-stop-inline span {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9b632f;
+}
+
+.next-stop-inline strong {
+  font-size: 1.02rem;
+}
+
+.next-stop-inline small {
+  color: #5d7667;
 }
 
 .summary-actions {
   display: grid;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .primary-button,
@@ -307,6 +383,11 @@ input {
 .secondary-button {
   color: #163f2a;
   background: #dde9df;
+}
+
+.compact-button {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
 .primary-button,
@@ -351,29 +432,29 @@ input {
 }
 
 .stop-card {
-  padding: 1rem;
-  border-radius: 20px;
-  background: #f8fbf7;
+  padding: 0.85rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8f3 100%);
   border: 1px solid rgba(73, 103, 82, 0.12);
   transition: transform 160ms ease, background 160ms ease;
 }
 
 .stop-card.is-completed {
-  background: #e3efe7;
+  background: linear-gradient(180deg, #edf5ef 0%, #e3efe7 100%);
   opacity: 0.9;
 }
 
 .stop-card-header {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.6rem;
   align-items: flex-start;
   justify-content: space-between;
 }
 
 .stop-number {
   display: inline-block;
-  margin-bottom: 0.2rem;
-  font-size: 0.8rem;
+  margin-bottom: 0.15rem;
+  font-size: 0.74rem;
   font-weight: 700;
   color: #3d6f54;
   text-transform: uppercase;
@@ -385,19 +466,23 @@ input {
 }
 
 .stop-card p + p {
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
 }
 
 .stop-notes {
-  margin: 0.8rem 0 1rem !important;
+  margin: 0.55rem 0 0.75rem !important;
   color: #34513f;
+  padding: 0.55rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(22, 63, 42, 0.05);
+  font-size: 0.94rem;
 }
 
 .status-badge {
   flex-shrink: 0;
-  padding: 0.35rem 0.7rem;
+  padding: 0.3rem 0.65rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 
@@ -412,17 +497,8 @@ input {
 }
 
 @media (min-width: 780px) {
-  .hero {
-    grid-template-columns: 1.3fr 0.9fr;
-    align-items: start;
-  }
-
   .route-screen {
-    grid-template-columns: 0.95fr 1.05fr;
-  }
-
-  .route-summary {
-    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
   }
 
   .stop-list-panel {
@@ -432,10 +508,15 @@ input {
   .summary-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .stop-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 520px) {
   .selection-header,
+  .route-summary-head,
   .stop-card-header,
   .assignment-button {
     display: grid;
@@ -444,5 +525,23 @@ input {
   .selection-meta,
   .assignment-button small {
     text-align: left;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .route-summary,
+  .stop-list-panel {
+    padding: 0.85rem;
+  }
+
+  .summary-actions {
+    gap: 0.55rem;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 0.8rem 1rem;
   }
 }

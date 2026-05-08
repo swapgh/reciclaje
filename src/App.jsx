@@ -1,13 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import L from 'leaflet'
-
-const markerIcon = new L.DivIcon({
-  className: 'route-marker',
-  html: '<span></span>',
-  iconSize: [18, 18],
-  iconAnchor: [9, 9],
-})
 
 const depotOrigin = '39.860985941591984,4.26217301603865'
 const lastAssignmentStorageKey = 'driver-route-last-assignment'
@@ -19,15 +10,6 @@ Joan,Truck 1,Hotel Port Mahon,Avinguda Port de Mao 14,Mao,Kitchen oil drums
 Pere,Truck 2,Hotel Cala Galdana,Avinguda Cala Galdana,Cala Galdana,Plastic containers
 Pere,Truck 2,Supermercat Ferreries,Carrer Major 44,Ferreries,Cardboard pickup
 Pere,Truck 2,Restaurant Es Brucs,Carrer des Tamarells 5,Son Bou,Mixed recyclables`
-
-const menorcaCoordinates = {
-  alcalfar: [39.8259, 4.2908],
-  fornells: [40.0416, 4.1325],
-  mao: [39.8885, 4.2658],
-  'cala galdana': [39.9378, 3.9605],
-  ferreries: [39.9838, 4.0096],
-  'son bou': [39.8947, 4.0702],
-}
 
 function parseCsv(text) {
   const lines = text
@@ -45,8 +27,6 @@ function parseCsv(text) {
   return lines.slice(1).map((line, index) => {
     const values = line.split(',').map((value) => value.trim())
     const row = Object.fromEntries(headers.map((header, headerIndex) => [header, values[headerIndex] ?? '']))
-    const cityKey = row.city.toLowerCase()
-    const coordinates = menorcaCoordinates[cityKey] ?? [39.9496, 4.1106]
 
     return {
       id: `${row.driver}-${row.truck}-${index}`,
@@ -56,7 +36,6 @@ function parseCsv(text) {
       address: row.address,
       city: row.city,
       notes: row.notes,
-      coordinates,
     }
   })
 }
@@ -109,7 +88,6 @@ function App() {
   const [selectedAssignmentId, setSelectedAssignmentId] = useState('')
   const [completedStops, setCompletedStops] = useState({})
   const [driverQuery, setDriverQuery] = useState('')
-  const [showAdminPanel, setShowAdminPanel] = useState(false)
 
   const assignments = useMemo(() => buildAssignments(stops), [stops])
   const selectedAssignment = useMemo(
@@ -168,7 +146,6 @@ function App() {
       setCompletedStops({})
       setSelectedAssignmentId('')
       setDriverQuery('')
-      setShowAdminPanel(false)
     }
     reader.readAsText(file)
   }
@@ -182,50 +159,32 @@ function App() {
 
   const routeStops = selectedAssignment?.stops ?? []
   const completedCount = routeStops.filter((stop) => completedStops[stop.id]).length
-  const mapCenter = routeStops[0]?.coordinates ?? [39.9496, 4.1106]
+  const nextPendingStop = routeStops.find((stop) => !completedStops[stop.id]) ?? null
+  const progressPercent = routeStops.length ? Math.round((completedCount / routeStops.length) * 100) : 0
 
   return (
     <div className="app-shell">
       <header className="hero">
-        <div className="hero-copy-block">
-          <p className="eyebrow">Menorca Driver Route</p>
-          <h1>Your route, ready in one tap.</h1>
-          <p className="hero-copy">Choose driver and truck. See only your stops. Start driving.</p>
-        </div>
-
         {!selectedAssignment && (
           <section className="admin-panel compact">
+            <p className="panel-label">Office Upload</p>
+            <p className="admin-copy">CSV columns: driver, truck, name, address, city, notes</p>
+            <label className="upload-field">
+              <span>Upload routes CSV</span>
+              <input type="file" accept=".csv,text/csv" onChange={handleCsvUpload} />
+            </label>
             <button
-              className="ghost-button"
+              className="secondary-button"
               type="button"
-              onClick={() => setShowAdminPanel((current) => !current)}
+              onClick={() => {
+                setStops(parseCsv(demoCsv))
+                setCompletedStops({})
+                setSelectedAssignmentId('')
+                setDriverQuery('')
+              }}
             >
-              {showAdminPanel ? 'Hide admin tools' : 'Admin / demo tools'}
+              Reload demo data
             </button>
-
-            {showAdminPanel && (
-              <div className="admin-panel-body">
-                <p className="panel-label">Office Upload</p>
-                <p className="admin-copy">CSV columns: driver, truck, name, address, city, notes</p>
-                <label className="upload-field">
-                  <span>Upload routes CSV</span>
-                  <input type="file" accept=".csv,text/csv" onChange={handleCsvUpload} />
-                </label>
-                <button
-                  className="secondary-button"
-                  type="button"
-                  onClick={() => {
-                    setStops(parseCsv(demoCsv))
-                    setCompletedStops({})
-                    setSelectedAssignmentId('')
-                    setDriverQuery('')
-                    setShowAdminPanel(false)
-                  }}
-                >
-                  Reload demo data
-                </button>
-              </div>
-            )}
           </section>
         )}
       </header>
@@ -279,6 +238,12 @@ function App() {
                   <div className="assignment-main">
                     <strong>{assignment.driver}</strong>
                     <span>{assignment.truck}</span>
+                    <div className="assignment-cities">
+                      {assignment.stops.slice(0, 3).map((stop) => (
+                        <em key={stop.id}>{stop.city}</em>
+                      ))}
+                      {assignment.stops.length > 3 && <em>+{assignment.stops.length - 3}</em>}
+                    </div>
                   </div>
                   <small>{assignment.stops.length} stops</small>
                 </button>
@@ -293,10 +258,25 @@ function App() {
       ) : (
         <main className="route-screen">
           <section className="route-summary">
-            <div>
-              <p className="panel-label">Today</p>
-              <h2>{selectedAssignment.driver}</h2>
-              <p className="summary-line">{selectedAssignment.truck}</p>
+            <div className="route-summary-head">
+              <div>
+                <p className="panel-label">Today</p>
+                <h2>{selectedAssignment.driver}</h2>
+                <p className="summary-line">{selectedAssignment.truck}</p>
+              </div>
+            </div>
+
+            <div className="progress-banner">
+              <div className="progress-copy">
+                <span>Route progress</span>
+                <strong>
+                  {completedCount} / {routeStops.length} completed
+                </strong>
+              </div>
+              <div className="progress-meter" aria-label={`${progressPercent}% completed`}>
+                <span style={{ width: `${progressPercent}%` }}></span>
+              </div>
+              <small>{progressPercent}% done</small>
             </div>
 
             <div className="summary-grid">
@@ -312,7 +292,19 @@ function App() {
                 <span>Pending</span>
                 <strong>{routeStops.length - completedCount}</strong>
               </article>
+              <article>
+                <span>Truck</span>
+                <strong>{selectedAssignment.truck.replace('Truck ', 'T')}</strong>
+              </article>
             </div>
+
+            {nextPendingStop && (
+              <div className="next-stop-inline">
+                <span>Next</span>
+                <strong>{nextPendingStop.name}</strong>
+                <small>{nextPendingStop.city}</small>
+              </div>
+            )}
 
             <div className="summary-actions">
               <a
@@ -336,32 +328,9 @@ function App() {
             </div>
           </section>
 
-          <section className="map-panel">
-            <div className="map-header">
-              <h3>Stops map</h3>
-              <p>Depot to assigned stops only.</p>
-            </div>
-            <MapContainer center={mapCenter} zoom={11} scrollWheelZoom={false} className="route-map">
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {routeStops.map((stop, index) => (
-                <Marker key={stop.id} position={stop.coordinates} icon={markerIcon}>
-                  <Popup>
-                    {index + 1}. {stop.name}
-                    <br />
-                    {stop.address}, {stop.city}
-                  </Popup>
-                </Marker>
-              ))}
-            </MapContainer>
-          </section>
-
           <section className="stop-list-panel">
             <div className="map-header">
               <h3>Stop list</h3>
-              <p>Tap each stop when finished.</p>
             </div>
 
             <div className="stop-list">
@@ -385,7 +354,7 @@ function App() {
                     <p className="stop-notes">{stop.notes}</p>
 
                     <button
-                      className={completed ? 'secondary-button' : 'primary-button'}
+                      className={completed ? 'secondary-button compact-button' : 'primary-button compact-button'}
                       type="button"
                       onClick={() => toggleStopCompletion(stop.id)}
                     >
