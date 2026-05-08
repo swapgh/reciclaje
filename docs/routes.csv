@@ -1,0 +1,21 @@
+driver,truck,name,address,city,notes
+Joan,Truck 1,Hotel Xuroy,Carrer Llevant 2,Alcalfar,Organic waste
+Joan,Truck 1,Restaurant Sa Llagosta,Carrer des Port 10,Fornells,Glass pickup
+Pere,Truck 2,Hotel Cala Galdana,Avinguda Cala Galdana 1,Cala Galdana,Plastic containers
+Pere,Truck 2,Supermercat Ferreries,Carrer Major 44,Ferreries,Cardboard pickup
+Miquel,Truck 3,Hotel Port Mahon,Avinguda Port de Mao 14,Mao,Kitchen oil drums
+Miquel,Truck 3,Bar Es Castell,Carrer Stuart 18,Es Castell,Glass and cardboard
+Toni,Truck 4,Restaurant Binibeca,Carrer des Timó 6,Binibeca,Organic pickup
+Toni,Truck 4,Hotel Sur Menorca,Carrer Equinoccis 23,Punta Prima,Plastic containers
+Laura,Truck 5,Supermercat Alaior,Carrer Sant Diego 12,Alaior,Cardboard pickup
+Laura,Truck 5,Restaurant Son Bou,Carrer des Tamarells 5,Son Bou,Mixed recyclables
+Nuria,Truck 6,Hotel Ciutadella,Carrer Sant Isidre 33,Ciutadella,Glass pickup
+Nuria,Truck 6,Restaurant Cala Blanca,Avinguda Cala Blanca 15,Cala Blanca,Organic waste
+Marc,Truck 7,Bar Es Mercadal,Carrer Nou 7,Es Mercadal,Cardboard and glass
+Marc,Truck 7,Hotel Arenal d'en Castell,Via de Ronda 20,Arenal d'en Castell,Plastic pickup
+Sergi,Truck 8,Restaurant Fornells Bay,Carrer de la Mar 3,Fornells,Used oil collection
+Sergi,Truck 8,Supermercat Playas de Fornells,Carrer Tramuntana 9,Playas de Fornells,Cardboard pickup
+Ana,Truck 9,Hotel Santo Tomas,Playa Santo Tomas,Santo Tomas,Organic and glass
+Ana,Truck 9,Restaurant Es Migjorn,Carrer Major 22,Es Migjorn Gran,Plastic containers
+David,Truck 10,Hotel Cala en Bosch,Passeig Maritim 36,Cala en Bosch,Glass containers
+David,Truck 10,Restaurant Cap d'Artrutx,Avinguda Cap d'Artrutx 11,Cala en Bosch,Cardboard pickup
